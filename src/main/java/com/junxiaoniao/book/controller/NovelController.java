@@ -86,7 +86,7 @@ public class NovelController {
         return collection;
     }
 
-    @Value("${file.upload.dir}")
+    @Value("E:/fileUpload/file")
     private String uploadFilePath;
 
     @Value("E:/fileUpload/image")
