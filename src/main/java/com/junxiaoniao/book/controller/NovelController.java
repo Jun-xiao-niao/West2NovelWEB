@@ -189,9 +189,4 @@ public class NovelController {
         List<Novel> list=novelMapper.queryNovelList();
         return list;
     }
-
-
-
-
-
 }

@@ -1,10 +1,7 @@
 package com.junxiaoniao.book.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.junxiaoniao.book.mapper.NovelMapper;
 import com.junxiaoniao.book.mapper.UserMapper;
-import com.junxiaoniao.book.pojo.Json;
 import com.junxiaoniao.book.pojo.NovelCollection;
 import com.junxiaoniao.book.pojo.User;
 import io.swagger.annotations.Api;
@@ -12,13 +9,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
