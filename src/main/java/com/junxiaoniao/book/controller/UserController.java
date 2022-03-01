@@ -34,14 +34,16 @@ public class UserController {
     @ApiOperation("注册入口")
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object register(@RequestParam("username") String name, @RequestParam("password") String pwd, @RequestParam("email") String em) {
+    public Object register(@RequestParam("username") String name,
+                           @RequestParam("password") String pwd,
+                           @RequestParam("email") String em) {
         User user = new User(name, pwd, em, "Normal User");
         User findUser = userMapper.queryUerByName(name);
         if (findUser != null) {
-            return JSON.toJSONString(new Json(-1, "注册失败，用户名以被占用"));
+            return "{code:-1,msg:注册失败，用户名以被占用}";
         } else {
             userMapper.loginUser(user);
-            return JSON.toJSONString(new Json(1, "注册成功"));
+            return "{code:1,msg:注册成功}";
         }
     }
 
@@ -59,15 +61,15 @@ public class UserController {
                 response.addCookie(cookie);
                 session.setAttribute("username", name);
                 if (authority.equals("admin")) {
-                    return JSON.toJSONString(new Json(1, "管理员登录成功"));
+                    return "{code:1,msg:管理员登录成功}";
                 } else {
-                    return JSON.toJSONString(new Json(0, "用户登录成功"));
+                    return "{code:0,msg:用户登录成功}";
                 }
             } else {
-                return JSON.toJSONString(new Json(-1, "密码错误"));
+                return "{code:-1,msg:密码错误}";
             }
         } else {
-            return JSON.toJSONString(new Json(-1, "用户不存在"));
+            return "{code:-1,msg:用户不存在}";
         }
     }
 
@@ -77,9 +79,9 @@ public class UserController {
     public Object isLogin(HttpServletResponse response, HttpServletRequest request) {
         Object logUser = request.getSession().getAttribute("username");
         if (logUser == null) {
-            return JSON.toJSONString(new Json(-1, "尚未登录"));
+            return "{code:-1,msg:尚未登录}";
         } else {
-            return JSON.toJSONString(new Json(1, "已登录"));
+            return "{code:-1,msg:已登录}";
         }
     }
 
