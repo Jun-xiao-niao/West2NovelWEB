@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.junxiaoniao.book.mapper.UserMapper">
+
+
+
+    <select id="queryUerByName" resultType="User">
+        select * from user where username=#{username}
+    </select>
+
+    <insert id="loginUser">
+        insert into user(username,password,email,privilege) value (#{username},#{password},#{email},#{privilege})
+    </insert>
+
+    <insert id="collect">
+        insert into kamigamecollection (novelID,novelName) value (#{novelID},#{novelName})
+    </insert>
+
+    <select id="queryUserCollection" resultType="NovelCollection">
+        select * from kamigamecollection
+    </select>
+
+</mapper>

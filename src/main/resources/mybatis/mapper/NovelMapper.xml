@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.junxiaoniao.book.mapper.NovelMapper">
+
+    <select id="queryNovelList" resultType="Novel">
+        select * from novel
+    </select>
+
+    <select id="queryNovelByName" resultType="Novel">
+        select * from noval where novelName =#{novelName}
+    </select>
+
+    <select id="fuzzyQueryNovelByName" resultType="Novel">
+        select * from noval where novelName like #{novelName}
+    </select>
+
+    <select id="queryRandomNovel" resultType="Novel">
+        Select TOP 1 * From novel Order By NewID()
+    </select>
+
+    <update id="collect" parameterType="Novel">
+        update novel set collection=#{collection} where novelName=#{novelName}
+    </update>
+
+    <insert id="uploadingNovel">
+        insert into uploadingnovel(writerName,novelName,novelTag,novelbrief,novelURL) value (#{writerName},#{novelName},#{novelTag},#{brief},#{fileURL})
+    </insert>
+
+    <insert id="uploadingPicture" >
+        insert into uploadingpicture (pictureName,pictureURL) value (#{pictureName},#{fileURL})
+    </insert>
+
+    <select id="findUpnovel" resultType="UploadingNovel">
+        select * from uploadingnovel
+    </select>
+
+    <select id="findUpPicture" resultType="UploadingPicture">
+        select * from uploadingpicture
+    </select>
+
+    <select id="findUploadingNovelByID" resultType="UploadingNovel">
+        select * from uploadingnovel where novelID =#{novelID}
+    </select>
+
+    <select id="findUploadingPictureByID" resultType="UploadingPicture">
+        select * from uploadingpicture where pictureID =#{pictureID}
+    </select>
+
+    <insert id="pass">
+        insert into pass(writerName,novelName,novelTag,brief,fileURL,pictureURL,collection) value (#{writerName},#{novelName},#{novelTag},#{brief},#{fileURL},#{pictureURL},#{collection})
+    </insert>
+
+    <delete id="deleteUploadingNovelByID" parameterType="int">
+        delete from uploadingnovel where novelID = #{novelID}
+    </delete>
+
+    <delete id="deleteUploadingPictureByID" parameterType="int">
+        delete from uploadingpicture where pictureID = #{pictureID}
+    </delete>
+
+</mapper>

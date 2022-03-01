@@ -1,0 +1,28 @@
+package com.junxiaoniao.book.config;
+
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@EnableSwagger2
+@ConditionalOnProperty(name = "swagger.enable", havingValue = "true")
+public class SwaggerConfig {
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .useDefaultResponseMessages(false)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("利用swagger构建api文档")
+                .description("简单使用swagger2")
+                .version("1.0")
+                .build();
+    }
+}
