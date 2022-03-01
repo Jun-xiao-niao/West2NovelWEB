@@ -8,6 +8,3 @@ spring:
 mybatis:
   type-aliases-package: com.junxiaoniao.book.pojo
   mapper-locations: classpath:mybatis/mapper/*.xml
-
-swagger:
-  enable: true
