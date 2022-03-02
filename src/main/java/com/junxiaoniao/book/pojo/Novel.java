@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Novel implements Comparable<Novel> {
+public class Novel {
     private int novelID;
     private String writerName;
     private String novelName;
@@ -17,11 +17,5 @@ public class Novel implements Comparable<Novel> {
     private int collection;
     private String fileURL;
     private String pictureURL;
-
-    @Override
-    public int compareTo(Novel o) {
-        int i = this.collection - o.collection;
-        return i;
-    }
 }
 

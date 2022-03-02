@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -55,6 +56,14 @@ public class NovelController {
         return new Json(200,"收藏成功");
     }
 
+    @ApiOperation("查询所有小说")
+    @RequestMapping(value = "/findAllnovel", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Novel> findAll(){
+        List<Novel> list=novelMapper.queryNovelList();
+        return list;
+    }
+
     @ApiOperation("获取随机推荐小说")
     @RequestMapping(value = "/recommended", method = RequestMethod.GET)
     @ResponseBody
@@ -69,9 +78,12 @@ public class NovelController {
     @ResponseBody
     public List<Novel> queryRankList() {
         List<Novel> list = novelMapper.queryNovelList();
-        Collections.sort(list);
+        Collections.sort(list, (o1, o2) -> {
+            //按收藏数量逆序排序(从大到小)
+            return o2.getCollection() - o1.getCollection();
+        });
         List<Novel> finalList = new ArrayList<>();
-        for (int i = list.size() - 1; i > list.size() - 10; i--) {
+        for (int i = 0;i < 10; i++) {
             finalList.add(list.get(i));
         }
         return finalList;
@@ -172,13 +184,5 @@ public class NovelController {
         os.write(readBytes);
         result.put("success","下载成功");
         return result;
-    }
-
-    @ApiOperation("查找所有图书")
-    @RequestMapping(value = "/findAllnovel", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Novel> findAll(){
-        List<Novel> list=novelMapper.queryNovelList();
-        return list;
     }
 }
