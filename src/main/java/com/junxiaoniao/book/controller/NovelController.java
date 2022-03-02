@@ -25,7 +25,7 @@ import java.util.List;
 
 @Controller
 @Api("面向用户的小说功能")
-@RequestMapping("/file")
+@RequestMapping("/novel")
 @Slf4j
 
 public class NovelController {
@@ -78,13 +78,6 @@ public class NovelController {
         return finalList;
     }
 
-    @ApiOperation("查询用户收藏夹")
-    @ResponseBody
-    @RequestMapping(value = "/queryUserCollection", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    public List<NovelCollection> getCollection() {
-        List<NovelCollection> collection = userMapper.queryUserCollection();
-        return collection;
-    }
 
     @Value("E:/fileUpload/file")
     private String uploadFilePath;
