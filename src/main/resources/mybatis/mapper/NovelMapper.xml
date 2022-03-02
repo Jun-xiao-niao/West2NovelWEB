@@ -25,27 +25,23 @@
     </update>
 
     <insert id="uploadingNovel">
-        insert into uploadingnovel(writerName,novelName,novelTag,novelbrief,novelURL) value (#{writerName},#{novelName},#{novelTag},#{brief},#{fileURL})
+        insert into uploadingnovel(writerName,novelName,novelTag,brief,collection,fileURL,pictureURL) value (#{writerName},#{novelName},#{novelTag},#{brief},#{collection},#{fileURL},#{pictureURL})
     </insert>
 
     <insert id="uploadingPicture" >
-        insert into uploadingpicture (pictureName,pictureURL) value (#{pictureName},#{fileURL})
+        insert into uploadingpicture (pictureURL) value (#{fileURL})
     </insert>
 
-    <select id="findUpnovel" resultType="UploadingNovel">
+    <select id="queryUpnovel" resultType="Novel">
         select * from uploadingnovel
     </select>
 
-    <select id="findUpPicture" resultType="UploadingPicture">
+    <select id="queryUpPicture" resultType="UploadingPicture">
         select * from uploadingpicture
     </select>
 
-    <select id="findUploadingNovelByID" resultType="UploadingNovel">
+    <select id="queryUploadingNovelByID" resultType="Novel">
         select * from uploadingnovel where novelID =#{novelID}
-    </select>
-
-    <select id="findUploadingPictureByID" resultType="UploadingPicture">
-        select * from uploadingpicture where pictureID =#{pictureID}
     </select>
 
     <insert id="pass">
@@ -56,8 +52,5 @@
         delete from uploadingnovel where novelID = #{novelID}
     </delete>
 
-    <delete id="deleteUploadingPictureByID" parameterType="int">
-        delete from uploadingpicture where pictureID = #{pictureID}
-    </delete>
 
 </mapper>

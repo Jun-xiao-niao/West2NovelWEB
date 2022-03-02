@@ -33,6 +33,10 @@ public class NovelController {
     UserMapper userMapper;
     @Autowired
     NovelMapper novelMapper;
+    @Value("F:/novelUploading/novel")
+    private String novelUpPath;
+    @Value("F:/novelUploading/picture")
+    private String pictureUpPath;
 
     @ApiOperation("模糊搜索")
     @PostMapping("/searchNovel/{name}")
@@ -88,75 +92,42 @@ public class NovelController {
         return finalList;
     }
 
-
-    @Value("E:/fileUpload/file")
-    private String uploadFilePath;
-
-    @Value("E:/fileUpload/image")
-    private String ImagePath;
-
-    @ApiOperation("上传txt文件")
+    @ApiOperation("上传txt小说文件 和 jpg/png图片文件")
     @ResponseBody
-    @PostMapping("/uploadFile")
-    public Object fileUpload(@RequestParam("file") MultipartFile file , @RequestParam("novelName") String novelName,@RequestParam("writer") String writer, @RequestParam("introduction") String introduction, @RequestParam("type") String type)  {
-        JSONObject result=new JSONObject();
-        if (file.isEmpty()){
-            result.put("error","空文件");
-            return result;
-        }
-        String fileName = file.getOriginalFilename();//得到文件名
-        String suffixName=fileName.substring(fileName.lastIndexOf("."));//得到后缀名
-        String realFileName=fileName.substring(0,fileName.lastIndexOf(suffixName));//得到不包含后缀的文件名
-        String fileUrl = uploadFilePath+"/"+fileName;
-        File tempfile=new File(fileUrl);
-        if (!tempfile.getParentFile().exists()) {
-            tempfile.getParentFile().mkdirs();
-        }
+    @PostMapping("/uploadingNovel")
+    public Object fileUploading(@RequestParam("novelFile") MultipartFile novelFile ,
+                                @RequestParam("pictureFile") MultipartFile pictureFile ,
+                                @RequestParam("novelName") String novelName,
+                                @RequestParam("writer") String writer,
+                                @RequestParam("introduction") String introduction,
+                                @RequestParam("type") String type) {
 
-        try {
-            file.transferTo(tempfile);
-        }catch (Exception e){
-            log.error("发生错误: {}",e);
-            result.put("error",e.getMessage());
-            return result;
+        String originalFilename = novelFile.getOriginalFilename();//小说文件名，可以和小说名不一样
+        int lastIndexOf = originalFilename.lastIndexOf(".");
+        String fileType = originalFilename.substring(lastIndexOf + 1);//判断小说文件类型
 
-        }
-        UploadingNovel novel=new UploadingNovel(0,writer,novelName,type,introduction,fileUrl);
-        novelMapper.uploadingNovel(novel);
-        result.put("success","文件上传审核成功");
-        return result;
-    }
+        String originalFilename2 = pictureFile.getOriginalFilename();//图片名
+        int lastIndexOf2 = originalFilename.lastIndexOf(".");
+        String fileType2 = originalFilename.substring(lastIndexOf2 + 1);//判断图片文件类型
 
-    @ApiOperation("上传图片文件")
-    @ResponseBody
-    @PostMapping("/uploadImage")
-    public Object ImageUpload(@RequestParam("file") MultipartFile file,@RequestParam("name") MultipartFile name ) {
-        JSONObject result=new JSONObject();
-        if (file.isEmpty()){
-            result.put("error","空文件");
-            return result;
+        if (fileType.equals("txt")||fileType2.equals("jpg") || fileType2.equals("png")) { //只允许txt文本上传 只允许jpg和png图片上传
+            String fileUrl = novelUpPath + "/" + originalFilename; //小说URL
+            String fileUrl2 = pictureUpPath + "/" + originalFilename2; //图片URL
+            File newFile = new File(fileUrl);
+            File newFile2 = new File(fileUrl2);
+            try {
+                novelFile.transferTo(newFile);
+                pictureFile.transferTo(newFile2);
+            } catch (IOException e) {
+                log.error("发生错误: {}", e);
+                return new Json(500, e.getMessage());
+            }
+            Novel novel = new Novel(0, writer, novelName, type, introduction,0, fileUrl,fileUrl2);
+            novelMapper.uploadingNovel(novel); //存审核数据库
+            return new Json(200, "成功上传，等待审核中");
+        } else {
+            return new Json(500, "请上传正确的文件格式：上传txt小说文件 和 jpg/png图片文件");
         }
-        String fileName = file.getOriginalFilename();//得到文件名
-        String suffixName=fileName.substring(fileName.lastIndexOf("."));//得到后缀名
-        String realFileName=fileName.substring(0,fileName.lastIndexOf(suffixName));//得到不包含后缀的文件名
-        String fileUrl = ImagePath+"/"+fileName;
-        File tempfile=new File(fileUrl);
-        if (!tempfile.getParentFile().exists()) {
-            tempfile.getParentFile().mkdirs();
-        }
-
-        try {
-            file.transferTo(tempfile);
-        }catch (Exception e){
-            log.error("发生错误: {}",e);
-            result.put("error",e.getMessage());
-            return result;
-
-        }
-        UploadingPicture picture=new UploadingPicture(0,realFileName,fileUrl);
-        novelMapper.uploadingPicture(picture);
-        result.put("success","图片上传审核成功");
-        return result;
     }
 
     @ApiOperation("下载小说")

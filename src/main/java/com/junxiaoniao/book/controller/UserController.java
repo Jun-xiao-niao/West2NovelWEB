@@ -62,10 +62,10 @@ public class UserController {
                     return new Json(200,"用户登录成功");
                 }
             } else {
-                return new Json(400,"密码错误");
+                return new Json(500,"密码错误");
             }
         } else {
-            return new Json(400,"用户不存在");
+            return new Json(500,"用户不存在");
         }
     }
 
@@ -75,7 +75,7 @@ public class UserController {
     public Object isLogin(HttpServletResponse response, HttpServletRequest request) {
         Object logUser = request.getSession().getAttribute("username");
         if (logUser == null) {
-            return new Json(400,"尚未登录");
+            return new Json(500,"尚未登录");
         } else {
             return new Json(200,"已登录");
         }

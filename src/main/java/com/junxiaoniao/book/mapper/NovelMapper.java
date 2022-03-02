@@ -1,8 +1,6 @@
 package com.junxiaoniao.book.mapper;
 
 import com.junxiaoniao.book.pojo.Novel;
-import com.junxiaoniao.book.pojo.UploadingNovel;
-import com.junxiaoniao.book.pojo.UploadingPicture;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -26,31 +24,19 @@ public interface NovelMapper {
     //小说收藏量加1
     void collect(Novel novel);
 
-    //上传小说
-    void uploadingNovel(UploadingNovel uploadingNovel);
-
-    //上传图片
-    void uploadingPicture(UploadingPicture uploadingPicture);
+    //上传小说和图片
+    void uploadingNovel(Novel novel);
 
     //查询所有待审核的小说
-    List<UploadingNovel> findUpnovel();
-
-    //查询所有待审核的图片
-    List<UploadingPicture> findUpPicture();
+    List<Novel> queryUpNovel();
 
     //通过ID查询待审核的小说
-    UploadingNovel findUploadingNovelByID(int novelID);
-
-    //通过ID查询待审核的图片
-    UploadingPicture findUploadingPictureByID(int pictureID);
+    Novel queryUploadingNovelByID(int novelID);
 
     //通过待审核的小说和图片
     void pass(Novel novel);
 
     //通过ID删除待审核的小说
     void deleteUploadingNovelByID(int ID);
-
-    //通过ID删除待审核的图片
-    void deleteUploadingPictureByID(int ID);
 
 }
