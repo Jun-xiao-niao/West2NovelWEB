@@ -53,7 +53,7 @@ public class NovelController {
         //该书的收藏量加1
         novel.setCollection(novel.getCollection() + 1);
         novelMapper.collect(novel);
-        return JSON.toJSONString(new Json(1, "收藏成功"));
+        return "{code:200,msg:收藏成功}";
     }
 
     @ApiOperation("获取随机推荐小说")

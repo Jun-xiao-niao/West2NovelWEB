@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @Api("面向管理员的小说功能")
-@RequestMapping("/file")
+@RequestMapping("/admin")
 @Slf4j
 public class AdminController {
 
@@ -29,23 +29,23 @@ public class AdminController {
 
 
     @ApiOperation("查看所有待审核小说")
-    @RequestMapping(value = "/findAll", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/queryUploadingNovel", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<UploadingNovel> findAllCh() {
         List<UploadingNovel> list = novelMapper.findUpnovel();
         return list;
     }
 
-    @ApiOperation("查找所有待审核图书")
-    @RequestMapping(value = "/findAllUploading", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ApiOperation("查找所有待审核图片")
+    @RequestMapping(value = "/queryUploadingPicture", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<UploadingPicture> findAll() {
         List<UploadingPicture> list = novelMapper.findUpPicture();
         return list;
     }
 
-    @ApiOperation("管理员通过ID审核小说和对应的图片")
-    @GetMapping("/checkNovel/{ID}")
+    @ApiOperation("管理员通过ID 审核小说和对应的图片")
+    @GetMapping("/passNovel/{ID}")
     @ResponseBody
     public Object successChecked(@RequestParam("id") int id) {
         UploadingNovel novel = novelMapper.findUploadingNovelByID(id);
@@ -55,9 +55,9 @@ public class AdminController {
             novelMapper.pass(finalNovel);
             novelMapper.deleteUploadingNovelByID(novel.getNovelID());
             novelMapper.deleteUploadingPictureByID(picture.getPictureID());
-            return JSON.toJSONString(new Json(1, "审核成功"));
+            return "{code:200,msg:审核成功}";
         } else {
-            return JSON.toJSONString(new Json(-1, "未找到图书"));
+            return "{code:400,msg:未找到图书}";
         }
     }
 
@@ -70,9 +70,9 @@ public class AdminController {
         if (novel != null && picture != null) {
             novelMapper.deleteUploadingNovelByID(novel.getNovelID());
             novelMapper.deleteUploadingPictureByID(picture.getPictureID());
-            return JSON.toJSONString(new Json(1, "删除成功"));
+            return "{code:200,msg:删除成功}";
         } else {
-            return JSON.toJSONString(new Json(-1, "未找到图书"));
+            return "{code:200,msg:未找到小说}";
         }
     }
 }

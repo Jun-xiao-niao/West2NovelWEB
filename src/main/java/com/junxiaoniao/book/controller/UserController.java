@@ -35,10 +35,10 @@ public class UserController {
         User user = new User(name, pwd, em, "Normal User");
         User findUser = userMapper.queryUerByName(name);
         if (findUser != null) {
-            return "{code:-1,msg:注册失败，用户名以被占用}";
+            return "{code:400,msg:注册失败，用户名以被占用}";
         } else {
             userMapper.loginUser(user);
-            return "{code:1,msg:注册成功}";
+            return "{code:200,msg:注册成功}";
         }
     }
 
@@ -56,15 +56,15 @@ public class UserController {
                 response.addCookie(cookie);
                 session.setAttribute("username", name);
                 if (authority.equals("admin")) {
-                    return "{code:1,msg:管理员登录成功}";
+                    return "{code:200,msg:管理员登录成功}";
                 } else {
-                    return "{code:0,msg:用户登录成功}";
+                    return "{code:200,msg:用户登录成功}";
                 }
             } else {
-                return "{code:-1,msg:密码错误}";
+                return "{code:400,msg:密码错误}";
             }
         } else {
-            return "{code:-1,msg:用户不存在}";
+            return "{code:400,msg:用户不存在}";
         }
     }
 
@@ -74,9 +74,9 @@ public class UserController {
     public Object isLogin(HttpServletResponse response, HttpServletRequest request) {
         Object logUser = request.getSession().getAttribute("username");
         if (logUser == null) {
-            return "{code:-1,msg:尚未登录}";
+            return "{code:400,msg:尚未登录}";
         } else {
-            return "{code:-1,msg:已登录}";
+            return "{code:200,msg:已登录}";
         }
     }
 
