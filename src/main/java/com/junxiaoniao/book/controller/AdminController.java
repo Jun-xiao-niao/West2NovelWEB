@@ -1,6 +1,5 @@
 package com.junxiaoniao.book.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.junxiaoniao.book.mapper.NovelMapper;
 import com.junxiaoniao.book.mapper.UserMapper;
 import com.junxiaoniao.book.pojo.Json;
@@ -29,7 +28,7 @@ public class AdminController {
 
 
     @ApiOperation("查看所有待审核小说")
-    @RequestMapping(value = "/queryUploadingNovel", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/queryUploadingNovel", method = RequestMethod.GET)
     @ResponseBody
     public List<UploadingNovel> findAllCh() {
         List<UploadingNovel> list = novelMapper.findUpnovel();
@@ -37,7 +36,7 @@ public class AdminController {
     }
 
     @ApiOperation("查找所有待审核图片")
-    @RequestMapping(value = "/queryUploadingPicture", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/queryUploadingPicture", method = RequestMethod.GET)
     @ResponseBody
     public List<UploadingPicture> findAll() {
         List<UploadingPicture> list = novelMapper.findUpPicture();
@@ -55,9 +54,9 @@ public class AdminController {
             novelMapper.pass(finalNovel);
             novelMapper.deleteUploadingNovelByID(novel.getNovelID());
             novelMapper.deleteUploadingPictureByID(picture.getPictureID());
-            return "{code:200,msg:审核成功}";
+            return new Json(200,"审核成功");
         } else {
-            return "{code:400,msg:未找到图书}";
+            return new Json(400,"未找到图书");
         }
     }
 
@@ -70,9 +69,9 @@ public class AdminController {
         if (novel != null && picture != null) {
             novelMapper.deleteUploadingNovelByID(novel.getNovelID());
             novelMapper.deleteUploadingPictureByID(picture.getPictureID());
-            return "{code:200,msg:删除成功}";
+            return new Json(200,"删除成功");
         } else {
-            return "{code:200,msg:未找到小说}";
+            return new Json(200,"未找到小说");
         }
     }
 }

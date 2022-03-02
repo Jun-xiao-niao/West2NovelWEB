@@ -1,7 +1,6 @@
 package com.junxiaoniao.book.controller;
 
 import cn.hutool.core.io.FileUtil;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.junxiaoniao.book.mapper.NovelMapper;
 import com.junxiaoniao.book.mapper.UserMapper;
@@ -44,7 +43,7 @@ public class NovelController {
     }
 
     @ApiOperation("用户收藏此小说")
-    @RequestMapping(value = "/Collection/{name}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/Collection/{name}", method = RequestMethod.POST)
     @ResponseBody
     public Object collect(@PathVariable("name") String name) {
         Novel novel = novelMapper.queryNovelByName(name);
@@ -53,11 +52,11 @@ public class NovelController {
         //该书的收藏量加1
         novel.setCollection(novel.getCollection() + 1);
         novelMapper.collect(novel);
-        return "{code:200,msg:收藏成功}";
+        return new Json(200,"收藏成功");
     }
 
     @ApiOperation("获取随机推荐小说")
-    @RequestMapping(value = "/recommended", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/recommended", method = RequestMethod.GET)
     @ResponseBody
     public List<Novel> getCommend() {
         List<Novel> list = new ArrayList<>();
@@ -66,7 +65,7 @@ public class NovelController {
     }
 
     @ApiOperation("查询收藏前10的小说")
-    @RequestMapping(value = "/findRank", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/findRank", method = RequestMethod.GET)
     @ResponseBody
     public List<Novel> queryRankList() {
         List<Novel> list = novelMapper.queryNovelList();
@@ -88,7 +87,7 @@ public class NovelController {
     @ApiOperation("上传txt文件")
     @ResponseBody
     @PostMapping("/uploadFile")
-    public Object fileUpload(@RequestParam("file") MultipartFile file , @RequestParam("novelName") String novelName,@RequestParam("writer") String writer, @RequestParam("introduction") String introduction, @RequestParam("type") String type) throws IOException {
+    public Object fileUpload(@RequestParam("file") MultipartFile file , @RequestParam("novelName") String novelName,@RequestParam("writer") String writer, @RequestParam("introduction") String introduction, @RequestParam("type") String type)  {
         JSONObject result=new JSONObject();
         if (file.isEmpty()){
             result.put("error","空文件");
@@ -120,7 +119,7 @@ public class NovelController {
     @ApiOperation("上传图片文件")
     @ResponseBody
     @PostMapping("/uploadImage")
-    public Object ImageUpload(@RequestParam("file") MultipartFile file,@RequestParam("name") MultipartFile name ) throws IOException {
+    public Object ImageUpload(@RequestParam("file") MultipartFile file,@RequestParam("name") MultipartFile name ) {
         JSONObject result=new JSONObject();
         if (file.isEmpty()){
             result.put("error","空文件");
@@ -176,7 +175,7 @@ public class NovelController {
     }
 
     @ApiOperation("查找所有图书")
-    @RequestMapping(value = "/findAllnovel", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/findAllnovel", method = RequestMethod.GET)
     @ResponseBody
     public List<Novel> findAll(){
         List<Novel> list=novelMapper.queryNovelList();
