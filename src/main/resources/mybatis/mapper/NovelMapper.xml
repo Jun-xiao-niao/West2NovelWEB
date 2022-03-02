@@ -5,51 +5,66 @@
 <mapper namespace="com.junxiaoniao.book.mapper.NovelMapper">
 
     <select id="queryNovelList" resultType="Novel">
-        select * from novel
+        select *
+        from novel
     </select>
 
     <select id="queryNovelByName" resultType="Novel">
-        select * from noval where novelName =#{novelName}
+        select *
+        from noval
+        where novelName = #{novelName}
     </select>
 
     <select id="fuzzyQueryNovelByName" resultType="Novel">
-        select * from noval where novelName like #{novelName}
+        select *
+        from noval
+        where novelName like #{novelName}
     </select>
 
     <select id="queryRandomNovel" resultType="Novel">
-        Select TOP 1 * From novel Order By NewID()
+        Select TOP 1 *
+        From novel
+        Order By NewID()
     </select>
 
     <update id="collect" parameterType="Novel">
-        update novel set collection=#{collection} where novelName=#{novelName}
+        update novel
+        set collection=#{collection}
+        where novelName = #{novelName}
     </update>
 
     <insert id="uploadingNovel">
-        insert into uploadingnovel(writerName,novelName,novelTag,brief,collection,fileURL,pictureURL) value (#{writerName},#{novelName},#{novelTag},#{brief},#{collection},#{fileURL},#{pictureURL})
+        insert into uploadingnovel(writerName, novelName, novelTag, brief, collection, fileURL, pictureURL) value (#{writerName},#{novelName},#{novelTag},#{brief},#{collection},#{fileURL},#{pictureURL})
     </insert>
 
-    <insert id="uploadingPicture" >
+    <insert id="uploadingPicture">
         insert into uploadingpicture (pictureURL) value (#{fileURL})
     </insert>
 
     <select id="queryUpnovel" resultType="Novel">
-        select * from uploadingnovel
+        select *
+        from uploadingnovel
     </select>
 
     <select id="queryUpPicture" resultType="UploadingPicture">
-        select * from uploadingpicture
+        select *
+        from uploadingpicture
     </select>
 
     <select id="queryUploadingNovelByID" resultType="Novel">
-        select * from uploadingnovel where novelID =#{novelID}
+        select *
+        from uploadingnovel
+        where novelID = #{novelID}
     </select>
 
     <insert id="pass">
-        insert into pass(writerName,novelName,novelTag,brief,fileURL,pictureURL,collection) value (#{writerName},#{novelName},#{novelTag},#{brief},#{fileURL},#{pictureURL},#{collection})
+        insert into pass(writerName, novelName, novelTag, brief, fileURL, pictureURL, collection) value (#{writerName},#{novelName},#{novelTag},#{brief},#{fileURL},#{pictureURL},#{collection})
     </insert>
 
     <delete id="deleteUploadingNovelByID" parameterType="int">
-        delete from uploadingnovel where novelID = #{novelID}
+        delete
+        from uploadingnovel
+        where novelID = #{novelID}
     </delete>
 
 

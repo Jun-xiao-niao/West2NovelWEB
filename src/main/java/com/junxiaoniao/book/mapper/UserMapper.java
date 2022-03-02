@@ -6,6 +6,7 @@ import com.junxiaoniao.book.pojo.NovelCollection;
 import com.junxiaoniao.book.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Mapper
@@ -25,7 +26,6 @@ public interface UserMapper {
 
     //获取用户收藏
     List<NovelCollection> queryUserCollection();
-
 
 
 };

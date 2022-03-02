@@ -38,12 +38,12 @@ public class AdminController {
     @ResponseBody
     public Object pass(@RequestParam("id") int id) {
         Novel novel = novelMapper.queryUploadingNovelByID(id);
-        if (novel != null ) {
+        if (novel != null) {
             novelMapper.pass(novel);
             novelMapper.deleteUploadingNovelByID(novel.getNovelID());
-            return new Json(200,"审核成功");
+            return new Json(200, "审核成功");
         } else {
-            return new Json(500,"未找到图书");
+            return new Json(500, "未找到图书");
         }
     }
 
@@ -54,9 +54,9 @@ public class AdminController {
         Novel novel = novelMapper.queryUploadingNovelByID(id);
         if (novel != null) {
             novelMapper.deleteUploadingNovelByID(novel.getNovelID());
-            return new Json(200,"删除成功");
+            return new Json(200, "删除成功");
         } else {
-            return new Json(200,"未找到小说");
+            return new Json(200, "未找到小说");
         }
     }
 }

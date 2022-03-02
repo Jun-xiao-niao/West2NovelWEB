@@ -9,7 +9,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +39,10 @@ public class UserController {
         User user = new User(username, password, email, "Normal User");
         User queryUser = userMapper.queryUerByName(username);
         if (queryUser != null) {
-            return new Json(400,"注册失败，用户名以被占用");
+            return new Json(400, "注册失败，用户名以被占用");
         } else {
             userMapper.loginUser(user);
-            return new Json(200,"注册成功");
+            return new Json(200, "注册成功");
         }
     }
 
@@ -57,15 +60,15 @@ public class UserController {
                 response.addCookie(cookie);
                 session.setAttribute("username", name);
                 if (authority.equals("admin")) {
-                    return new Json(200,"管理员登录成功");
+                    return new Json(200, "管理员登录成功");
                 } else {
-                    return new Json(200,"用户登录成功");
+                    return new Json(200, "用户登录成功");
                 }
             } else {
-                return new Json(500,"密码错误");
+                return new Json(500, "密码错误");
             }
         } else {
-            return new Json(500,"用户不存在");
+            return new Json(500, "用户不存在");
         }
     }
 
@@ -75,9 +78,9 @@ public class UserController {
     public Object isLogin(HttpServletResponse response, HttpServletRequest request) {
         Object logUser = request.getSession().getAttribute("username");
         if (logUser == null) {
-            return new Json(500,"尚未登录");
+            return new Json(500, "尚未登录");
         } else {
-            return new Json(200,"已登录");
+            return new Json(200, "已登录");
         }
     }
 

@@ -15,6 +15,7 @@ public class CoreConfig {
         corsConfiguration.addAllowedMethod("*"); //允许任何方法（post、get等）
         return corsConfiguration;
     }
+
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

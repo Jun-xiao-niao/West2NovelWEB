@@ -5,21 +5,23 @@
 <mapper namespace="com.junxiaoniao.book.mapper.UserMapper">
 
 
-
     <select id="queryUerByName" resultType="User">
-        select * from user where username=#{username}
+        select *
+        from user
+        where username = #{username}
     </select>
 
     <insert id="loginUser">
-        insert into user(username,password,email,privilege) value (#{username},#{password},#{email},#{privilege})
+        insert into user(username, password, email, privilege) value (#{username},#{password},#{email},#{privilege})
     </insert>
 
     <insert id="collect">
-        insert into kamigamecollection (novelID,novelName) value (#{novelID},#{novelName})
+        insert into kamigamecollection (novelID, novelName) value (#{novelID},#{novelName})
     </insert>
 
     <select id="queryUserCollection" resultType="NovelCollection">
-        select * from kamigamecollection
+        select *
+        from kamigamecollection
     </select>
 
 </mapper>
