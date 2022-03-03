@@ -9,17 +9,18 @@ import java.util.List;
 @Mapper
 @Repository
 public interface NovelMapper {
+
     //查询所有小说
     List<Novel> queryNovelList();
 
-    //根据小说名查询书
+    //根据小说名查询小说
     Novel queryNovelByName(String novelName);
+
+    //根据收藏数降序 查询小说
+    List<Novel> queryNovelCollection();
 
     //用户模糊查询小说
     List<Novel> fuzzyQueryNovelByName(String novelName);
-
-    //随机获取一本书（随机获取数据库一列）
-    Novel queryRandomNovel();
 
     //小说收藏量加1
     void collect(Novel novel);

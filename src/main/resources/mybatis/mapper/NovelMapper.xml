@@ -15,16 +15,16 @@
         where novelName = #{novelName}
     </select>
 
+    <select id="queryNovelCollection" resultType="Novel">
+        select *
+        from novel
+        Order By collection DESC
+    </select>
+
     <select id="fuzzyQueryNovelByName" resultType="Novel">
         select *
         from noval
         where novelName like #{novelName}
-    </select>
-
-    <select id="queryRandomNovel" resultType="Novel">
-        Select TOP 1 *
-        From novel
-        Order By NewID()
     </select>
 
     <update id="collect" parameterType="Novel">
@@ -46,11 +46,6 @@
         from uploadingnovel
     </select>
 
-    <select id="queryUpPicture" resultType="UploadingPicture">
-        select *
-        from uploadingpicture
-    </select>
-
     <select id="queryUploadingNovelByID" resultType="Novel">
         select *
         from uploadingnovel
@@ -66,6 +61,5 @@
         from uploadingnovel
         where novelID = #{novelID}
     </delete>
-
 
 </mapper>

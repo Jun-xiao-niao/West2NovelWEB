@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -47,7 +46,7 @@ public class NovelController {
     }
 
     @ApiOperation("用户收藏此小说")
-    @RequestMapping(value = "/Collection/{name}", method = RequestMethod.POST)
+    @RequestMapping(value = "/Collect/{name}", method = RequestMethod.POST)
     @ResponseBody
     public Object collect(@PathVariable("name") String name) {
         Novel novel = novelMapper.queryNovelByName(name);
@@ -60,7 +59,7 @@ public class NovelController {
     }
 
     @ApiOperation("查询所有小说")
-    @RequestMapping(value = "/findAllnovel", method = RequestMethod.GET)
+    @RequestMapping(value = "/queryAllnovel", method = RequestMethod.GET)
     @ResponseBody
     public List<Novel> findAll() {
         List<Novel> list = novelMapper.queryNovelList();
@@ -68,23 +67,23 @@ public class NovelController {
     }
 
     @ApiOperation("获取随机推荐小说")
-    @RequestMapping(value = "/recommended", method = RequestMethod.GET)
+    @RequestMapping(value = "/recommendedNovel", method = RequestMethod.GET)
     @ResponseBody
-    public List<Novel> getCommend() {
-        List<Novel> list = new ArrayList<>();
-        list.add(novelMapper.queryRandomNovel());
-        return list;
+    public List<Novel> queryRandomNovel() {
+        List<Novel> list = novelMapper.queryNovelList();
+        int max = list.size();
+        int ran = (int) (Math.random()*max);
+        List<Novel> fanalList = new ArrayList<>();
+        fanalList.add(list.get(ran));
+        return fanalList;
     }
 
+
     @ApiOperation("查询收藏前10的小说")
-    @RequestMapping(value = "/findRank", method = RequestMethod.GET)
+    @RequestMapping(value = "/queryRank", method = RequestMethod.GET)
     @ResponseBody
     public List<Novel> queryRankList() {
-        List<Novel> list = novelMapper.queryNovelList();
-        Collections.sort(list, (o1, o2) -> {
-            //按收藏数量逆序排序(从大到小)
-            return o2.getCollection() - o1.getCollection();
-        });
+        List<Novel> list = novelMapper.queryNovelCollection();
         List<Novel> finalList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             finalList.add(list.get(i));
@@ -130,9 +129,9 @@ public class NovelController {
         }
     }
 
-    @ApiOperation("下载小说")
+    @ApiOperation("下载小说txt文件")
     @ResponseBody
-    @GetMapping("/downloadFile")
+    @GetMapping("/downloadNovel")
     public Object fileDownload(HttpServletResponse response, @RequestParam("name") String fileName) throws IOException {
         Novel noveldownload = novelMapper.queryNovelByName(fileName);
         File file = new File(noveldownload.getFileURL());
