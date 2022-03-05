@@ -49,10 +49,11 @@ public class UserController {
     @ApiOperation("登录入口")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
-    public Object login(@RequestParam("username") String name, @RequestParam("password") String pwd, HttpServletResponse response, HttpSession session) {
-
+    public Object login(@RequestParam("username") String name,
+                        @RequestParam("password") String pwd,
+                        HttpServletResponse response,
+                        HttpSession session) {
         User user = userMapper.queryUerByName(name);
-
         if (user != null) {
             if (pwd.equals(user.getPassword())) {
                 String authority = user.getPrivilege();
@@ -75,7 +76,8 @@ public class UserController {
     @ApiOperation("判断是否登录")
     @ResponseBody
     @RequestMapping(value = "/isLogin", method = RequestMethod.GET)
-    public Object isLogin(HttpServletResponse response, HttpServletRequest request) {
+    public Object isLogin(HttpServletResponse response,
+                          HttpServletRequest request) {
         Object logUser = request.getSession().getAttribute("username");
         if (logUser == null) {
             return new Json(500, "尚未登录");

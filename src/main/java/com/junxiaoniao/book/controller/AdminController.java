@@ -28,9 +28,13 @@ public class AdminController {
     @ApiOperation("查询所有待审核小说")
     @RequestMapping(value = "/queryUploadingNovel", method = RequestMethod.GET)
     @ResponseBody
-    public List<Novel> queryUpNovel() {
+    public Object queryUpNovel() {
         List<Novel> list = novelMapper.queryUpNovel();
-        return list;
+        if (list != null){
+            return list;
+        }else{
+            return new Json(200, "无待审核小说");
+        }
     }
 
     @ApiOperation("管理员通过ID 审核小说和对应的图片")
