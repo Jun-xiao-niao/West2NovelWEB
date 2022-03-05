@@ -39,7 +39,7 @@ public class NovelController {
     private String novelUpPath;
     @Value("F:/novelUploading/picture/")
     private String pictureUpPath;
-    //前端访问资源地址
+    //前端访问图片资源地址
     @Value("http://v4934114w1.wocp.fun/picture/")
     private String pictureUsePath;
 
@@ -68,8 +68,17 @@ public class NovelController {
     @ApiOperation("查询所有小说")
     @RequestMapping(value = "/queryAllnovel", method = RequestMethod.GET)
     @ResponseBody
-    public List<Novel> findAll() {
+    public List<Novel> queryAll() {
         List<Novel> list = novelMapper.queryNovelList();
+        return list;
+    }
+
+    @ApiOperation("通过ID查询小说")
+    @RequestMapping(value = "/queryNovelID", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Novel> queryNovelByID(@RequestParam("novelID") int novelID) {
+        List<Novel> list = new ArrayList<>();
+        list.add(novelMapper.queryNovelByID(novelID));
         return list;
     }
 

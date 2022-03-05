@@ -11,8 +11,14 @@
 
     <select id="queryNovelByName" resultType="Novel">
         select *
-        from noval
+        from novel
         where novelName = #{novelName}
+    </select>
+
+    <select id="queryNovelByID" resultType="Novel">
+        select *
+        from novel
+        where novelID = #{novelID}
     </select>
 
     <select id="queryNovelCollection" resultType="Novel">

@@ -16,6 +16,9 @@ public interface NovelMapper {
     //根据小说名查询小说
     Novel queryNovelByName(String novelName);
 
+    //根据小说ID查询小说
+    Novel queryNovelByID(int novelID);
+
     //根据收藏数降序 查询小说
     List<Novel> queryNovelCollection();
 
