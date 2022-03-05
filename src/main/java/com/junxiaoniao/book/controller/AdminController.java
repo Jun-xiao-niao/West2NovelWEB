@@ -30,10 +30,10 @@ public class AdminController {
     @ResponseBody
     public Object queryUpNovel() {
         List<Novel> list = novelMapper.queryUpNovel();
-        if (list != null){
-            return list;
-        }else{
+        if (list.isEmpty()) {
             return new Json(200, "无待审核小说");
+        } else {
+            return list;
         }
     }
 

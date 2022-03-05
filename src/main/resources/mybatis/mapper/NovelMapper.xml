@@ -23,7 +23,7 @@
 
     <select id="fuzzyQueryNovelByName" resultType="Novel">
         select *
-        from noval
+        from novel
         where novelName like #{novelName}
     </select>
 
@@ -41,7 +41,7 @@
         insert into uploadingpicture (pictureURL) value (#{fileURL})
     </insert>
 
-    <select id="queryUpnovel" resultType="Novel">
+    <select id="queryUpNovel" resultType="Novel">
         select *
         from uploadingnovel
     </select>

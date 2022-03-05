@@ -45,10 +45,10 @@ public class NovelController {
 
 
     @ApiOperation("模糊搜索")
-    @PostMapping("/searchNovel/{name}")
+    @RequestMapping(value = "/searchNovel/{name}", method = RequestMethod.POST)
     @ResponseBody
     public List<Novel> findNovel(@RequestParam("novelName") String novelName) {
-        List<Novel> list = novelMapper.fuzzyQueryNovelByName(novelName);
+        List<Novel> list = novelMapper.fuzzyQueryNovelByName("%" +novelName+ "%");
         return list;
     }
 
