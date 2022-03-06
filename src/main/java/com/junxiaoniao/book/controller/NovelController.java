@@ -83,7 +83,7 @@ public class NovelController {
         return list;
     }
 
-    @ApiOperation("获取随机推荐小说")
+    @ApiOperation("随机获取4本推荐小说")
     @RequestMapping(value = "/recommendedNovel", method = RequestMethod.GET)
     @ResponseBody
     public List<Novel> queryRandomNovel() {
@@ -96,13 +96,13 @@ public class NovelController {
             lst.add(i);
         }
         int index;//随机索引
-        List<Novel> fanalList = new ArrayList<>();//存放随机数字
+        List<Novel> finalList = new ArrayList<>();//存放随机数字
         for (int i = 0; i < size; i++) {
             index = rd.nextInt(num - i);
-            fanalList.add(list.get(lst.get(index)));
+            finalList.add(list.get(lst.get(index)));
             lst.remove(index);
         }
-        return fanalList;
+        return finalList;
     }
 
     @ApiOperation("查询收藏前10的小说")

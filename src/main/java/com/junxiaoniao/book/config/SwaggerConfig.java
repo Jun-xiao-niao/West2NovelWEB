@@ -25,9 +25,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("小说网站——B站十分钟，少读十年书")
-                .description("【后端 10点-22点 在线,其他时间随缘在线】")
-                .version("最终版（后端跑路版）")
+                .title("小说网站——万般皆下品，唯有读书高")
+                .description("【后端 10点-22点 在线，其他时间随缘在线】")
+                .version("最终版")
                 .build();
     }
 }
