@@ -76,8 +76,7 @@ public class UserController {
     @ApiOperation("判断是否登录")
     @ResponseBody
     @RequestMapping(value = "/isLogin", method = RequestMethod.GET)
-    public Object isLogin(HttpServletResponse response,
-                          HttpServletRequest request) {
+    public Object isLogin(HttpServletRequest request) {
         Object logUser = request.getSession().getAttribute("username");
         if (logUser == null) {
             return new Json(500, "尚未登录");
