@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -48,7 +49,7 @@ public class NovelController {
     @RequestMapping(value = "/searchNovel/{name}", method = RequestMethod.POST)
     @ResponseBody
     public List<Novel> findNovel(@RequestParam("novelName") String novelName) {
-        List<Novel> list = novelMapper.fuzzyQueryNovelByName("%" +novelName+ "%");
+        List<Novel> list = novelMapper.fuzzyQueryNovelByName("%" +novelName+ "%"); //通配符
         return list;
     }
 
@@ -87,7 +88,7 @@ public class NovelController {
     @ResponseBody
     public List<Novel> queryRandomNovel() {
         List<Novel> list = novelMapper.queryNovelList();
-        int size = 6;  //获取6个不重复随机数
+        int size = 4;  //获取4个不重复随机数
         int num = 20; //书本数
         Random rd = new Random();
         List<Integer> lst = new ArrayList<>();//存放有序数字集合
@@ -154,7 +155,7 @@ public class NovelController {
             return new Json(500, "请上传正确的文件格式：上传txt小说文件 和 jpg/png图片文件");
         }
     }
-
+    //https://blog.csdn.net/weixin_43100896/article/details/89880596
     @ApiOperation("下载小说txt文件")
     @ResponseBody
     @GetMapping("/downloadNovel")
@@ -164,17 +165,11 @@ public class NovelController {
         String downloadName = file.getName();
         if (!file.exists()) {
             return new Json(500, "文件不存在");
-
         }
-        response.reset();
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
-        response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(downloadName, "UTF-8"));
-
-        byte[] readBytes = FileUtil.readBytes(file);
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(downloadName, "UTF-8"));//通过设置响应头控制浏览器以UTF-8的编码显示数据
+        byte[] readBytes = FileUtil.readBytes(file); //将文件转换成字节数组
         OutputStream os = response.getOutputStream();
-        os.write(readBytes);
+        os.write(readBytes); //使用OutputStream流向客户端输出字节数组
         return new Json(200, "下载成功");
     }
 }
