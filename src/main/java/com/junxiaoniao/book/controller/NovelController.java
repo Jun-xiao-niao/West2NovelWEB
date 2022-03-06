@@ -166,6 +166,10 @@ public class NovelController {
         if (!file.exists()) {
             return new Json(500, "文件不存在");
         }
+        response.reset();
+        response.setContentType("application/octet-stream");  //下载的是文件
+        response.setCharacterEncoding("utf-8");
+        response.setContentLength((int)file.length());
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(downloadName, "UTF-8"));//通过设置响应头控制浏览器以UTF-8的编码显示数据
         byte[] readBytes = FileUtil.readBytes(file); //将文件转换成字节数组
         OutputStream os = response.getOutputStream();

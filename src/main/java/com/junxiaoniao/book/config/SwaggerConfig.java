@@ -26,7 +26,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("小说网站——B站十分钟，少读十年书")
-                .description("这是一些简单的接口，有问题用QQ找后端,包括不能用,想修改返回值都可以私聊后端,后端教学仅限接口问题并且只提供有限支持。 【后端 10点-22点 在线,其他时间随缘在线】")
+                .description("【后端 10点-22点 在线,其他时间随缘在线】")
                 .version("最终版（后端跑路版）")
                 .build();
     }
